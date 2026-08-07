@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "scope": "Seattle Metro IMAX screen dimensions",
+  "checkedAt": "2026-08-03",
+  "referenceSource": "Official venue pages and Where to Sit research audit",
+  "measurements": {
+    "paccar-imax": [
+      18.288,
+      11.278
+    ]
+  },
+  "overrides": {
+    "paccar-imax": {
+      "confidence": "high",
+      "status": "verified",
+      "label": "Verified",
+      "note": "PACCAR publishes a 60 ft × 37 ft screen. Metric dimensions are conversions of those official measurements.",
+      "sources": [
+        "https://pacificsciencecenter.org/visit/imax/"
+      ]
+    }
+  }
+}

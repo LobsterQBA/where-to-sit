@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+coverage/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+.vercel/
+*.tsbuildinfo
+
+# Local social-video working files; the app does not use these.
+media/
+public/social/
