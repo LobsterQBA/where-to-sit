@@ -20,6 +20,7 @@ test("exports the English Seattle theater finder", async () => {
   assert.match(html, /soda-cup/);
   assert.match(html, /Seattle Metro/);
   assert.match(html, /PACCAR IMAX/);
+  assert.match(html, /\/_vercel\/insights\/script\.js/);
   for (const id of hallIds) assert.match(html, new RegExp(`/cinema/${id}/`));
 });
 
@@ -32,5 +33,6 @@ test("exports all auditorium simulator routes with estimate boundaries", async (
     assert.match(html, /Estimated seat layout/);
     assert.match(html, /Metrics are geometric estimates/);
     assert.match(html, /Seat map/);
+    assert.match(html, /\/_vercel\/insights\/script\.js/);
   }
 });

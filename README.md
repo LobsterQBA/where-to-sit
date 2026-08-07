@@ -56,8 +56,9 @@ npm run build
 ## Stack
 
 Next.js, TypeScript, React Three Fiber, Three.js, and static JSON data. The app
-exports as static files and does not require an account, database, analytics,
-or location storage.
+exports as static files and does not require an account, database, or location
+storage. The portfolio host uses cookieless Vercel Web Analytics to count
+anonymous visits and page views.
 
 ## Legal
 
