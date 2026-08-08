@@ -13,3 +13,4 @@ coverage/
 # Local social-video working files; the app does not use these.
 media/
 public/social/
+.gstack/

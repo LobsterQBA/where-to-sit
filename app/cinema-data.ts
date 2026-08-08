@@ -164,12 +164,12 @@ function projectionDetails(hall: InventoryHall) {
 function hallToAuditorium(hall: InventoryHall): Auditorium {
   const cinema = getCinemaListingByHallId(hall.id);
   const screenWidth = hall.width ?? 18;
+  const reportedAspectRatio = Number.parseFloat(hall.ratio.split(":")[0]);
+  const estimatedAspectRatio = Number.isFinite(reportedAspectRatio)
+    ? Math.max(reportedAspectRatio, 1.43)
+    : 1.9;
   const screenHeight =
-    hall.height ??
-    (hall.ratio
-      ? screenWidth /
-        Math.max(Number.parseFloat(hall.ratio.split(":")[0]), 1.43)
-      : screenWidth / 1.9);
+    hall.height ?? screenWidth / estimatedAspectRatio;
   const seatLayout = capturedSeatLayouts[hall.id] ?? null;
   const rowSeatCounts =
     seatLayout?.rows.map((row) => row.cells.length) ?? approximateRows(hall);

@@ -32,5 +32,6 @@ test("exports all auditorium simulator routes with estimate boundaries", async (
     assert.match(html, /Estimated seat layout/);
     assert.match(html, /Metrics are geometric estimates/);
     assert.match(html, /Seat map/);
+    assert.doesNotMatch(html, /NaN/);
   }
 });
