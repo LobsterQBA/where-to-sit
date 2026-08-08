@@ -1,6 +1,6 @@
 # Where to Sit
 
-A mobile-friendly Seattle IMAX seat-view simulator. Choose a theater, try a
+A mobile-friendly IMAX seat-view simulator for Seattle, New York, and the San Francisco Bay Area. Choose a theater, try a
 seat, and preview how the screen may feel before buying a ticket.
 
 [Try the live experience](https://www.leozhao.me/projects/where-to-sit/) ·
@@ -11,16 +11,17 @@ seat, and preview how the screen may feel before buying a ticket.
 ## What it does
 
 - Finds the nearest listed theater when location permission is granted.
-- Compares seven Seattle Metro IMAX venues.
+- Compares 20 IMAX venues across Seattle Metro, NYC Metro, and the SF Bay Area.
 - Lets you select an illustrative seat in an interactive 3D auditorium.
 - Changes the camera perspective for every selected position.
 - Includes a mobile layout, keyboard controls, reduced-motion support, and a
   non-WebGL fallback.
 
-## Seattle data boundary
+## Data boundary
 
-- The selector contains seven active Seattle Metro IMAX candidates.
+- The selector contains seven Seattle Metro, seven NYC Metro, and six SF Bay Area IMAX candidates.
 - PACCAR uses its officially published 60 ft × 37 ft screen measurements.
+- New York and Bay Area venue/format facts come from official operator pages; coordinates are geocoded with OpenStreetMap data.
 - No reusable fixed seating plan is available for these venues, so every displayed seat grid is labeled `Estimated seat layout`.
 - Room depth, row spacing, elevation, seat positions, screen distance and viewing angles are illustrative geometric estimates.
 - No ticketing seat map, live availability, prices or showtimes are scraped or displayed.
@@ -64,8 +65,8 @@ anonymous visits and page views.
 
 Required third-party license notices are retained in
 [`THIRD_PARTY_LICENSES/`](./THIRD_PARTY_LICENSES/). External cinema inventory,
-captured seat layouts, trademarks, and movie media are not included. Seattle
-venue facts come from the project's evidence audit, and the included test reel
+captured seat layouts, trademarks, and movie media are not included. Venue
+facts come from official operator pages and the project's evidence audit; the included test reel
 uses original neutral artwork.
 
 This project is independent and unofficial. It is not affiliated with IMAX Corporation or any listed theater operator.

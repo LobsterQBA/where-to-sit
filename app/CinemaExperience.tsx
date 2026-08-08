@@ -230,8 +230,8 @@ export function CinemaExperience({
               data-dbd-pattern="film-player"
               onClick={togglePlayback}
               aria-pressed={playing}
-              aria-label={`${playing ? "Pause preview" : "Play preview"}: Seattle test reel`}
-              title={`${playing ? "Pause preview" : "Play preview"}: Seattle test reel`}
+              aria-label={`${playing ? "Pause preview" : "Play preview"}: original test reel`}
+              title={`${playing ? "Pause preview" : "Play preview"}: original test reel`}
             >
               {playing ? (
                 <Pause size={18} weight="fill" />
@@ -239,7 +239,7 @@ export function CinemaExperience({
                 <Play size={18} weight="fill" />
               )}
               <strong>
-                {playing ? "Pause preview" : "Play preview"}: Seattle test reel
+                {playing ? "Pause preview" : "Play preview"}: original test reel
               </strong>
             </button>
 

@@ -12,17 +12,17 @@ const favicon = new URL("favicon.svg", metadataBase).toString();
 export const metadata: Metadata = {
   metadataBase,
   title: {
-    default: "Where to Sit | Seattle IMAX Simulator",
+    default: "Where to Sit | IMAX Seat View Simulator",
     template: "%s | Where to Sit",
   },
   description:
-    "Compare Seattle Metro IMAX theaters, then preview an estimated seat-level view inside a 3D auditorium.",
+    "Compare IMAX theaters in Seattle, New York, and the Bay Area, then preview an estimated seat-level view in 3D.",
   icons: {
     icon: favicon,
     shortcut: favicon,
   },
   openGraph: {
-    title: "Where to Sit | Seattle IMAX Simulator",
+    title: "Where to Sit | IMAX Seat View Simulator",
     description: "Choose a theater. Then preview the seat.",
     type: "website",
     locale: "en_US",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Where to Sit | Seattle IMAX Simulator",
+    title: "Where to Sit | IMAX Seat View Simulator",
     description: "Choose a theater. Then preview the seat.",
     images: [socialImage],
   },

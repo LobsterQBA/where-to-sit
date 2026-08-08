@@ -11,6 +11,7 @@ import {
 import { type CSSProperties, useEffect, useMemo, useState } from "react";
 import {
   cinemaListings,
+  citySummaries,
   haversineDistanceKm,
   type CinemaListing,
   type PremiumFormat,
@@ -24,12 +25,23 @@ import { DataSourceAttribution } from "./data-source";
 type FormatFilter = "all" | PremiumFormat;
 type UserLocation = { latitude: number; longitude: number };
 type LocationStatus = "idle" | "locating" | "ready" | "denied" | "error";
+const markets = ["Seattle Metro", "NYC Metro", "SF Bay Area"] as const;
+type Market = (typeof markets)[number];
+
+const marketDetails: Record<
+  Market,
+  { label: string; kicker: string; cupLabel: string }
+> = {
+  "Seattle Metro": { label: "Seattle", kicker: "Seattle · IMAX", cupLabel: "SEA" },
+  "NYC Metro": { label: "New York", kicker: "New York · IMAX", cupLabel: "NYC" },
+  "SF Bay Area": { label: "Bay Area", kicker: "Bay Area · IMAX", cupLabel: "SFO" },
+};
 
 const listScrollStorageKey = "where-to-sit-cinema-list-scroll-y";
 const cinemaSearchIndexes = new Map(
   cinemaListings.map((cinema) => [
     cinema.id,
-    buildPinyinSearchIndex(`${cinema.name} ${cinema.address}`),
+    buildPinyinSearchIndex(`${cinema.name} ${cinema.address} ${cinema.city}`),
   ]),
 );
 
@@ -142,6 +154,7 @@ function CinemaRow({
 }
 
 export function CinemaFinder() {
+  const [selectedCity, setSelectedCity] = useState<Market>("Seattle Metro");
   const [formatFilter, setFormatFilter] = useState<FormatFilter>("all");
   const [query, setQuery] = useState("");
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
@@ -157,10 +170,24 @@ export function CinemaFinder() {
     setLocationStatus("locating");
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
-        setUserLocation({
+        const location = {
           latitude: coords.latitude,
           longitude: coords.longitude,
-        });
+        };
+        setUserLocation(location);
+        const nearestCinema = cinemaListings.reduce<CinemaListing | null>(
+          (nearest, cinema) => {
+            if (!nearest) return cinema;
+            return (getCinemaDistance(cinema, location) ?? Number.POSITIVE_INFINITY) <
+              (getCinemaDistance(nearest, location) ?? Number.POSITIVE_INFINITY)
+              ? cinema
+              : nearest;
+          },
+          null,
+        );
+        if (nearestCinema && markets.includes(nearestCinema.city as Market)) {
+          setSelectedCity(nearestCinema.city as Market);
+        }
         setLocationStatus("ready");
       },
       (error) => {
@@ -189,6 +216,7 @@ export function CinemaFinder() {
   const results = useMemo(
     () =>
       cinemaListings
+        .filter((cinema) => cinema.city === selectedCity)
         .filter(
           (cinema) =>
             formatFilter === "all" || cinema.formats.includes(formatFilter),
@@ -206,21 +234,29 @@ export function CinemaFinder() {
               (getCinemaDistance(right, userLocation) ?? Number.POSITIVE_INFINITY)
             );
           }
-          return (right.largestScreenArea ?? 0) - (left.largestScreenArea ?? 0);
+          return (
+            (left.priorityRank ?? Number.POSITIVE_INFINITY) -
+              (right.priorityRank ?? Number.POSITIVE_INFINITY) ||
+            left.name.localeCompare(right.name)
+          );
         }),
-    [formatFilter, query, userLocation],
+    [formatFilter, query, selectedCity, userLocation],
   );
+
+  const selectedMarket = marketDetails[selectedCity];
+  const selectedMarketCount =
+    citySummaries.find((city) => city.name === selectedCity)?.cinemaCount ?? 0;
 
   return (
     <main className="finder-page">
       <section className="finder-intro">
         <div className="intro-copy">
-          <span className="showtime-kicker"><i /> Seattle · IMAX</span>
+          <span className="showtime-kicker"><i /> {selectedMarket.kicker}</span>
           <h1>
             <span>See the view.</span>
             <em>Pick your seat.</em>
           </h1>
-          <p>Seven theaters. One quick preview.</p>
+          <p>{selectedMarketCount} theaters. One quick preview.</p>
         </div>
 
         <div className="concession-still-life" aria-hidden="true">
@@ -229,14 +265,30 @@ export function CinemaFinder() {
             <span /><span /><span /><span /><span /><span /><span />
             <i>WTS</i>
           </div>
-          <div className="soda-cup"><span /><i>SEA</i></div>
+          <div className="soda-cup"><span /><i>{selectedMarket.cupLabel}</i></div>
           <div className="admit-ticket"><small>ADMIT ONE</small><strong>ROW · SEAT</strong></div>
           <div className="concession-star star-one">✦</div>
           <div className="concession-star star-two">✦</div>
         </div>
       </section>
 
-      <section className="finder-workspace" aria-label="Seattle IMAX theaters">
+      <section className="finder-workspace" aria-label={`${selectedMarket.label} IMAX theaters`}>
+        <div className="market-switcher" aria-label="Choose a city" role="group">
+          {markets.map((market) => (
+            <button
+              className={selectedCity === market ? "is-active" : ""}
+              type="button"
+              aria-pressed={selectedCity === market}
+              key={market}
+              onClick={() => {
+                setSelectedCity(market);
+                setQuery("");
+              }}
+            >
+              {marketDetails[market].label}
+            </button>
+          ))}
+        </div>
         <div className="filter-bar minimal-filter-bar">
           <button
             className={`location-trigger ${locationStatus === "ready" ? "is-ready" : ""}`}

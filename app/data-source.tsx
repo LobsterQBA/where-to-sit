@@ -1,9 +1,9 @@
 export const primaryCinemaDataSource = {
-  id: "where-to-sit-20260803",
-  title: "Seattle IMAX simulability audit",
+  id: "where-to-sit-20260807",
+  title: "Venue evidence list",
   author: "Where to Sit",
-  versionDate: "2026-08-03",
-  url: "https://pacificsciencecenter.org/visit/imax/",
+  versionDate: "2026-08-07",
+  url: "https://github.com/LobsterQBA/where-to-sit/blob/main/app/cinema-inventory.json",
 } as const;
 
 export function DataSourceAttribution({
@@ -22,9 +22,15 @@ export function DataSourceAttribution({
         target="_blank"
         rel="noreferrer"
       >
-        Official venue pages + {primaryCinemaDataSource.title}
+        {primaryCinemaDataSource.title}
       </a>
-      <small>checked 2026-08-03 · exact room geometry not yet verified</small>
+      <small>
+        checked 2026-08-07 · coordinates ©{" "}
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">
+          OpenStreetMap contributors
+        </a>
+        {" "}· exact room geometry not yet verified
+      </small>
     </p>
   );
 }

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "scope": "Seattle Metro IMAX screen dimensions",
-  "checkedAt": "2026-08-03",
-  "referenceSource": "Official venue pages and Where to Sit research audit",
+  "scope": "IMAX screen dimensions for listed Seattle, NYC, and SF Bay Area venues",
+  "checkedAt": "2026-08-07",
+  "referenceSource": "Official venue pages, Where to Sit research audit, and OpenStreetMap geocoding",
   "measurements": {
     "paccar-imax": [
       18.288,
