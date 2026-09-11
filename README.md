@@ -17,6 +17,20 @@ seat, and preview how the screen may feel before buying a ticket.
 - Includes a mobile layout, keyboard controls, reduced-motion support, and a
   non-WebGL fallback.
 
+## How it works
+
+```mermaid
+flowchart LR
+    A["Pick a theater (or nearest via location permission)"] --> B["Load venue facts: screen size, format, estimated room geometry"]
+    B --> C["Estimated seat grid"]
+    C --> D["Select a seat"]
+    D --> E["Camera placed at that seat in a 3D auditorium (React Three Fiber)"]
+    E --> F["Preview: screen fill, viewing angle, elevation"]
+    E -.->|"no WebGL"| G["2D fallback"]
+```
+
+Every seat position drives a camera transform, so the preview updates as you move around the room. The geometry is illustrative unless a venue has verified measurements (see below).
+
 ## Data boundary
 
 - The selector contains seven Seattle Metro, seven NYC Metro, and six SF Bay Area IMAX candidates.
